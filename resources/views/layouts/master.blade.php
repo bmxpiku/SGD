@@ -6,7 +6,9 @@
         @include('scripts.common.header')
         @include('scripts.common.menu')
     </div>
-    @include('scripts.simulator.body')
+    <main>
+        @yield('content')
+    </main>
 
     @include('scripts.common.footer')
 </div>

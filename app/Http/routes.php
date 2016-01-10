@@ -15,6 +15,15 @@ Route::get('/', function () {
     return view('welcome');
 });
 Route::get('/index', 'WelcomeController@index');
+Route::get('/graph', 'WelcomeController@graph');
+Route::get('/data.json', 'WelcomeController@jsonData');
+
+Route::get('/add/{id?}', 'WelcomeController@add');
+Route::post('/add/{id?}', ['as' => 'add', 'uses' => 'WelcomeController@add']);
+
+Route::get('/path/{id?}', 'WelcomeController@path');
+Route::post('/path/{id?}', ['as' => 'path', 'uses' => 'WelcomeController@path']);
+
 /*
 |--------------------------------------------------------------------------
 | Application Routes
