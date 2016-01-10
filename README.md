@@ -1,3 +1,9 @@
+http://127.0.01/index
+
+db config in sgd.sql
+
+nginx config in default.conf
+
 ## Laravel PHP Framework
 
 [![Build Status](https://travis-ci.org/laravel/framework.svg)](https://travis-ci.org/laravel/framework)
