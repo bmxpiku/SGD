@@ -24,6 +24,7 @@ Route::post('/add/{id?}', ['as' => 'add', 'uses' => 'WelcomeController@add']);
 Route::get('/path/{id?}', 'WelcomeController@path');
 Route::post('/path/{id?}', ['as' => 'path', 'uses' => 'WelcomeController@path']);
 
+Route::get('/ssh/exec', 'WelcomeController@sshExec');
 /*
 |--------------------------------------------------------------------------
 | Application Routes

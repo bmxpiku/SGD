@@ -32,6 +32,10 @@ Lista wszystkich ruterów w sieci:
                 <a href="/path/{{$node['node']->id}}">
                     <button class="btn btn-sm btn-warning">{{'Ustal trasy'}}</button>
                 </a>
+
+                <a href="/path/{{$node['node']->id}}">
+                    <button class="btn btn-sm btn-danger">{{'Wykonaj  komendy po ssh'}}</button>
+                </a>
             </td>
         </tr>
     @endforeach

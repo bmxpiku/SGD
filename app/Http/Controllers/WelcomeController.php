@@ -87,4 +87,15 @@ class WelcomeController extends Controller
             ->with('conn', $connect)
             ->with('self', Node::getById($id));
     }
+
+    //<TODO>napisac  helper  do ssh
+    public function sshExec($id) {
+        $node = Node::getById($id);
+        $connection =  ssh2_connect(Config::get('ssh.host'), Config::get('ssh.port'));
+        if (!$connection) die('Connection failed');
+        ssh2_auth_password($connection, Config::get('ssh.username') , Config::get('ssh.password'));
+        $stream = ssh2_exec($connection, '/usr/local/bin/php -i');
+
+        return Redirect::back();
+    }
 }
