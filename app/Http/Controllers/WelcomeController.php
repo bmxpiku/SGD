@@ -55,7 +55,7 @@ class WelcomeController extends Controller
                     'label'  => $node->ip,
                     'radius' => 18000000,
                     'lineColor'  => '#2c3e50',
-                    'fillColor' => 'blue',
+                    'fillColor' => 'lightgrey',
                     'line-width' => '200'
                 ]
             ];
@@ -68,7 +68,8 @@ class WelcomeController extends Controller
                 'to' => $conn->connection_id,
                 'name' => $conn->colour,
                 'share' => 0,
-                'color' => $conn->colour
+                'color' => $conn->colour,
+                'bitrate' => $conn->bitrate
             ];
         }
 

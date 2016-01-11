@@ -26,7 +26,10 @@
             style: {
                 nodeAutoScaling: "linear",
                 nodeDetailMinSize: 0,
-                linkStyleFunction: linkStyle
+                linkStyleFunction: linkStyle,
+                nodeLabel: {
+                    textStyle: { font: "28px Roboto" }
+                }
             },
             layout: {
                 nodeSpacing: 20
@@ -36,7 +39,8 @@
             },
             interaction: {
                 resizing: {enabled: false}
-            }
+            },
+            theme: NetChart.themes.dark
         });
         function linkStyle(link){
             if (link.data.color != null && link.data.color != ''){
@@ -45,6 +49,9 @@
             } else{
                 link.fillColor = "lightgray";
                 link.radius = 1;
+            }
+            if (link.data.bitrate != null && link.data.bitrate != ''){
+                link.label = link.data.bitrate;
             }
         }
     </script>
