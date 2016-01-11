@@ -43,7 +43,33 @@ class WelcomeController extends Controller
     }
 
     public function jsonData(){
-        $ret = view('layouts.data')->render();
+        $nodes = Node::get();
+        $connections = Connections::get();
+
+        $ret = [];
+        foreach($nodes as $key => $node) {
+            $ret['nodes'][$key] = [
+                'id' => $node->id,
+                'loaded' => true,
+                'style' => [
+                    'label'  => $node->ip,
+                    'radius' => 18000000,
+                    'lineColor'  => '#2c3e50',
+                    'fillColor' => 'blue',
+                    'line-width' => '200'
+                ]
+            ];
+        }
+
+        foreach($connections as $key => $conn) {
+            $ret['links'][$key] = [
+                'id' => $conn->id,
+                'from' => $conn->connected_id,
+                'to' => $conn->connection_id,
+                'name' => $conn->colour,
+                'share' => 0
+            ];
+        }
 
         return response()->json($ret);
     }
