@@ -67,7 +67,8 @@ class WelcomeController extends Controller
                 'from' => $conn->connected_id,
                 'to' => $conn->connection_id,
                 'name' => $conn->colour,
-                'share' => 0
+                'share' => 0,
+                'color' => $conn->colour
             ];
         }
 

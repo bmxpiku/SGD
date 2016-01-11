@@ -27,7 +27,9 @@
                         {!! Form::checkbox($nameCheck, $node->id) !!}
                     </td>
                     <td>
-                        {!! Form::input('text', 'rows['.$key.'][colour]', '', array('class' => 'form-control', 'placeholder' => 'zielony')) !!}
+
+                        {!! Form::select('rows['.$key.'][colour]', array('grey' => 'szary','green' => 'zielony', 'red' => 'czerwony', 'yellow' => 'żółty')
+												, null, array('class' => 'form-control')) !!}
                     </td>
                     <td>
                         {!! Form::input('number', 'rows['.$key.'][bitrate]', '', array('class' => 'form-control', 'placeholder' => '10')) !!}
