@@ -82,6 +82,8 @@ class WelcomeController extends Controller
                 $node = new Node;
                 $node->name  = $request->name;
                 $node->ip  = $request->ip;
+                $node->login  = $request->login;
+                $node->password  = $request->password;
                 $node->save();
 
             }
@@ -95,12 +97,16 @@ class WelcomeController extends Controller
     public function path(RequestSave $request, $id) {
         if (Request::isMethod('post')) {
             $data = $request->all();
+            Connections::where('connected_id', $id)->delete();
             foreach($data['rows'] as  $row) {
                 if ($row['checkbox'] !== '0') {
                     $conn = new Connections;
                     $conn->connected_id  = $id;
                     $conn->connection_id  = $row['id'];
                     $conn->colour  = $row['colour'];
+                    $conn->network  = $row['network'];
+                    $conn->interface1  = $row['interface1'];
+                    $conn->interface2  = $row['interface2'];
                     $conn->bitrate  = $row['bitrate'];
                     $conn->save();
                 }

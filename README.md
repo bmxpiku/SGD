@@ -1,9 +1,18 @@
+
 ## Simple Graph Drawer (based on network topology)
 http://127.0.01/index
 
 db config in sgd.sql
 
 nginx config in default.conf
+
+----ALTER  DATABASE----
+alter table connections ADD network  varchar(100);
+alter table connections ADD interface1  varchar(100);
+alter table connections ADD interface2 varchar(100);
+alter table nodes ADD login varchar(100);
+alter table nodes ADD password varchar(100);
+
 
 ## Laravel PHP Framework
 

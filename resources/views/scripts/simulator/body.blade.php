@@ -4,7 +4,8 @@ Lista wszystkich ruterów w sieci:
 <table class="table table-bordered table-striped  table-condensed">
     <thead>
     <th>ID</th>
-    <th>Liczba połączeń</th>
+    <th>Liczba połączeń z</th>
+    <th>Liczba połączeń do</th>
     <th>ip</th>
     <th>
         Akcje
@@ -21,6 +22,9 @@ Lista wszystkich ruterów w sieci:
             </td>
             <td>
                 {{$node['connections']}}
+            </td>
+            <td>
+                {{$node['connections_to']}}
             </td>
             <td>
                 {{$node['node']->ip}}

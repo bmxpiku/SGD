@@ -14,12 +14,12 @@
     <!-- -->
     <script src="https://cdn.zoomcharts-cloud.com/1/stable/zoomcharts.js"></script>
 
-    <div id="demo">
+    <div id="demo" style="height: 100%; margin: 0px; padding: 0px;">
     </div>
     <script>
         var t = new NetChart({
             container: document.getElementById("demo"),
-            area: { height: 350 },
+            area: { height: 800 },
             data: { url: "/data.json" },
             nodeMenu: {enabled: false},
             linkMenu: {enabled: false},

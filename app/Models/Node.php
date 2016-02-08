@@ -25,13 +25,17 @@ class Node extends CachedModel
         $routers = array();
         foreach ($nodes as $key => $node) {
             $routers[$key]['node'] = $node;
-            $amount = 0;
+            $from = $to = 0;
             foreach($conn as $connection) {
                 if ($connection->connected_id == $node->id)  {
-                    $amount++;
+                    $from++;
+                }
+                if ($connection->connection_id == $node->id)  {
+                    $to++;
                 }
             }
-            $routers[$key]['connections'] = $amount;
+            $routers[$key]['connections'] = $from;
+            $routers[$key]['connections_to'] = $to;
         }
 
         return $routers;
