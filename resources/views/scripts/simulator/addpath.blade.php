@@ -24,7 +24,7 @@
                     <td>{{$node->ip}}</td>
                     <?php $temp  = false;?>
                     @foreach($conn as $connect)
-                        @if ($connect->connected_id == $node->id && $connect->connection_id == $self->id)
+                        @if ($connect->connection_id == $node->id && $connect->connected_id == $self->id)
                             <?php $temp = $connect; break;?>
                         @endif
                     @endforeach
@@ -34,6 +34,7 @@
                         <?php $nameCheck = 'rows['.$key.'][checkbox]['.$node->id.']'; ?>
                         {!! Form::hidden($nameCheck, '0') !!}
                         @if ($temp)
+							
                             {!! Form::checkbox($nameCheck, $node->id, true) !!}
                         @else
                             {!! Form::checkbox($nameCheck, $node->id) !!}
@@ -45,16 +46,16 @@
 												, null, array('class' => 'form-control')) !!}
                     </td>
                     <td>
-                        {!! Form::input('number', 'rows['.$key.'][bitrate]', $connect ? $connect->bitrate : '', array('class' => 'form-control', 'placeholder' => '10')) !!}
+                        {!! Form::input('number', 'rows['.$key.'][bitrate]', $temp ? $connect->bitrate : '', array('class' => 'form-control', 'placeholder' => '10')) !!}
                     </td>
                     <td>
-                        {!! Form::input('text', 'rows['.$key.']network', $connect ? $connect->network : '', array('class' => 'form-control')) !!}
+                        {!! Form::input('text', 'rows['.$key.'][network]', $temp ? $connect->network : '', array('class' => 'form-control')) !!}
                     </td>
                     <td>
-                        {!! Form::input('text', 'rows['.$key.']interface1', $connect ? $connect->interface1 : '', array('class' => 'form-control')) !!}
+                        {!! Form::input('text', 'rows['.$key.'][interface1]', $temp ? $connect->interface1 : '', array('class' => 'form-control')) !!}
                     </td>
                     <td>
-                        {!! Form::input('text', 'rows['.$key.']interface2', $connect ? $connect->interface2 : '', array('class' => 'form-control')) !!}
+                        {!! Form::input('text', 'rows['.$key.'][interface2]', $temp ? $connect->interface2 : '', array('class' => 'form-control')) !!}
                     </td>
                 </tr>
                 @endif
