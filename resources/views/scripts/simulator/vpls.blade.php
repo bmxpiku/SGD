@@ -55,12 +55,16 @@
 				<h4>definiowanie przepływności VPLSa</h4>
 				<div class="form-group form-group-sm">
 					<label for="color">Kolor</label>
-					{!! Form::select('color[]', array(
-					  'zolty' => array('NIE','TAK'),
-					  'zielony' => array('NIE', 'TAK'),
-					  'szary' => array('NIE', 'TAK'),
-					  'czerwony' => array('NIE', 'TAK')
-					), null, array('multiple', 'class' => 'form-control mySelect', 'style'=>'width:200px;height:200px')) !!}
+					{!! Form::select('color[]',array(
+					  'zolty NIE',
+					  'zolty TAK',
+					  'zielony NIE', 
+					  'zielony TAK',
+					  'szary NIE', 
+					  'szary TAK',
+					  'czerwony NIE', 
+					  'czerwony TAK'
+					), null, array('multiple', 'class' => 'form-control mySelect', 'style'=>'width:200px;height:150px')) !!}
 				</div>
 			</div>
 			
@@ -77,6 +81,7 @@ $('.mySelect').change(function () {
     $(this).find('option').css('background-color', 'transparent');
     $(this).find('option:selected').css('background-color', 'red');
 }).trigger('change');
+
 </script>
 
 @stop

@@ -103,19 +103,28 @@ class ConfigController extends Controller
     }
 	
 	/**
-	pole koloru zwraca ttablicę gdzie 0 oznacze nie a 1 tak
-	color" => array:4 [▼
+	pole koloru zwraca ttablicę gdzie mamy wybrane kolory w kolejnosci
+	0  'zolty NIE',
+	1  'zolty TAK',
+	2  'zielony NIE', 
+	3  'zielony TAK',
+	4  'szary NIE', 
+	5  'szary TAK',
+	6  'czerwony NIE', 
+	7  'czerwony TAK'
+	czyli np 
+	"color" => array:4 [▼
 		0 => "0"
-		1 => "0"
-		2 => "0"
-		3 => "0"
+		1 => "2"
+		2 => "5"
+		3 => "7"
 	  ]
 	**/
 	public function vplsView(Request $request) {
 		if (Request::isMethod('post')) {
 			
             $data = $request::all();
-			
+			$mask = $this->makeMask($data['color']);
 			dd($data);
 		}
 		$nodes = Node::get();
@@ -123,5 +132,14 @@ class ConfigController extends Controller
 		return view('scripts.simulator.vpls')
             ->with('nodes', $nodes);
 		
+	}
+	
+	/**
+	Tutaj proponuje zrobic obliczanie maski na podstawie ttablicy koloru
+	**/
+	private function makeMask() {
+		$mask = '';
+		
+		return $mask;
 	}
 }
