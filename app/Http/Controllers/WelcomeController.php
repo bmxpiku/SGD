@@ -97,11 +97,11 @@ class WelcomeController extends Controller
     public function path(RequestSave $request, $id) {
         if (Request::isMethod('post')) {
             $data = $request->all();
-			//dd($data);
+			//dd($data['rows']);
             Connections::where('connected_id', $id)->delete();
             foreach($data['rows'] as $key=>  $row) {
-                if ($row['checkbox'][$key+1] !== '0') {
-                    $conn = new Connections;
+		if ($row['checkbox'][$row['id']] !== '0') {
+		    $conn = new Connections;
                     $conn->connected_id  = $id;
                     $conn->connection_id  = $row['id'];
                     $conn->colour  = $row['colour'];

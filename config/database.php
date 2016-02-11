@@ -48,9 +48,9 @@ return [
         'mysql' => [
             'driver'    => 'mysql',
             'host'      => env('DB_HOST', '127.0.0.1'),
-            'database'  => env('DB_DATABASE', 'sgd'),
-            'username'  => env('DB_USERNAME', 'root'),
-            'password'  => env('DB_PASSWORD', 'admin'),
+            'database'  => env('DB_DATABASE', 'mpls_db'),
+            'username'  => env('DB_USERNAME', 'mpls'),
+            'password'  => env('DB_PASSWORD', '123mpls345'),
             'charset'   => 'utf8',
             'collation' => 'utf8_unicode_ci',
             'prefix'    => '',
