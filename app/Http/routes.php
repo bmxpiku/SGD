@@ -27,6 +27,9 @@ Route::post('/path/{id?}', ['as' => 'path', 'uses' => 'WelcomeController@path'])
 Route::get('/ssh/exec', 'WelcomeController@sshExec');
 
 Route::get('generate/{id?}', 'ConfigController@generateConfig');
+
+Route::get('/vpls', 'ConfigController@vplsView');
+Route::post('/vpls', ['as' => 'vpls', 'uses' => 'ConfigController@vplsView']);
 /*
 |--------------------------------------------------------------------------
 | Application Routes

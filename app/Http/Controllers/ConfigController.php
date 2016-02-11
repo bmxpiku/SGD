@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use Request;
 
 
 use App\Models\Connections;
@@ -101,4 +101,27 @@ class ConfigController extends Controller
     	$connIP = $node['ip'];
 
     }
+	
+	/**
+	pole koloru zwraca ttablicę gdzie 0 oznacze nie a 1 tak
+	color" => array:4 [▼
+		0 => "0"
+		1 => "0"
+		2 => "0"
+		3 => "0"
+	  ]
+	**/
+	public function vplsView(Request $request) {
+		if (Request::isMethod('post')) {
+			
+            $data = $request::all();
+			
+			dd($data);
+		}
+		$nodes = Node::get();
+		
+		return view('scripts.simulator.vpls')
+            ->with('nodes', $nodes);
+		
+	}
 }
