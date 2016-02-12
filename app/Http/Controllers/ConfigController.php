@@ -135,7 +135,7 @@ class ConfigController extends Controller
             $interface2 = $data['interface2'];
 
             //Traffic eng interface
-            $config1 = 'interface traffic-eng add name='.$data['ruter1'].'to'.$data['ruter2'].' primary-path=dyn record-route=yes bandwidth='.$data['bitrate'].'M affinity-include-all='.$affinity.' from-address='.$router1['name'].' to-address='.$router2['name'].'; ';
+            $config1 = 'interface traffic-eng add name='.$data['ruter1'].'to'.$data['ruter2'].' primary-path=dyn record-route=yes bandwidth='.$data['bitrate'].'M affinity-include-all='.$affinity.' from-address='.$router1['name'].' to-address='.$router2['name'].' disabled=no; ';
             //VPLS
             $config1 .= 'interface vpls add name=vpls-'.$data['ruter1'].'to'.$data['ruter2'].' remote-peer='.$router2['name'].' vpls-id='.$data['ruter1'].':'.$data['ruter2'].' disabled=no; ';
             //Bridge VPLS and local interface
@@ -144,7 +144,7 @@ class ConfigController extends Controller
             $config1 .= 'interface bridge port add bridge=vpls-bridge-'.$interface1.' interface='.$interface1.'; ';
 
 
-            $config2 = 'interface traffic-eng add name='.$data['ruter2'].'to'.$data['ruter1'].' primary-path=dyn record-route=yes bandwidth='.$data['bitrate'].'M affinity-include-all='.$affinity.' from-address='.$router2['name'].' to-address='.$router1['name'].'; ';
+            $config2 = 'interface traffic-eng add name='.$data['ruter2'].'to'.$data['ruter1'].' primary-path=dyn record-route=yes bandwidth='.$data['bitrate'].'M affinity-include-all='.$affinity.' from-address='.$router2['name'].' to-address='.$router1['name'].' disabled=no; ';
             //VPLS
             $config2 .= 'interface vpls add name=vpls-'.$data['ruter2'].'to'.$data['ruter1'].' remote-peer='.$router1['name'].' vpls-id='.$data['ruter1'].':'.$data['ruter2'].' disabled=no; ';
             
