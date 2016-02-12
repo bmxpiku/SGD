@@ -5,6 +5,9 @@
     <a href="/graph">
         <button class="btn btn-sm btn-default">{{'Rysuj Graf'}}</button>
     </a>
+    <a href="/vpls">
+	<button class="btn btn-sm btn-default">{{'VPLS'}}</button>
+    </a>
     <a href="/simulator">
         {{--<button class="btn btn-sm btn-default">Symulator</button>--}}
     </a>

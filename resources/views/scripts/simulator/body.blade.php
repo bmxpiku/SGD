@@ -34,11 +34,11 @@ Lista wszystkich ruterów w sieci:
                     <button class="btn btn-sm btn-info">{{'Edytuj'}}</button>
                 </a>
                 <a href="/path/{{$node['node']->id}}">
-                    <button class="btn btn-sm btn-warning">{{'Ustal trasy'}}</button>
+                    <button class="btn btn-sm btn-warning">{{'Ustal Łącza'}}</button>
                 </a>
 
-                <a href="/path/{{$node['node']->id}}">
-                    <button class="btn btn-sm btn-danger">{{'Wykonaj  komendy po ssh'}}</button>
+                <a href="/generate/{{$node['node']->id}}">
+                    <button class="btn btn-sm btn-danger">{{'Wygeneruj konfigurację'}}</button>
                 </a>
             </td>
         </tr>
