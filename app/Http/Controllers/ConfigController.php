@@ -98,6 +98,9 @@ class ConfigController extends Controller
 		//$configArray = implode(';', $config); // a samo wywołanie komend
 		//$sshService->cmd($config);
 		
+		//rozłączenie - zeby nie byłło wielu wiszących połączeń po wykonaniu instrukcji
+		//$sshService->disconnect();
+		
     	echo $config;
     }
 
