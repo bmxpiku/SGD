@@ -9,6 +9,7 @@ use App\Models\Connections;
 use App\Models\Node;
 use App\Http\Requests;
 use App\Http\Controllers\Controller;
+use App\Services\SshService;
 
 class ConfigController extends Controller
 {
@@ -90,8 +91,13 @@ class ConfigController extends Controller
     	// Traffic Eng
     	$config .= 'mpls traffic-eng tunnel-path add use-cspf=yes name=dyn; ';
 
-
-
+		//<TODO> 1. nie wiem czy node->ip to nasz host i czy port powinien być 80, więc zmień testując jak cos
+		//$sshService = new SshService( $node->ip, $node->login, $node->password, 80, '/tmp/log.txt' );
+		//<TODO> wykonywanie komend -> nie jestem pewien czy mozna wysyłac cały rząd koemnd podzielony srednikiem
+		// wiec jak cos można to rozbic na tablice komend jesli nie przejdzie  
+		//$configArray = implode(';', $config); // a samo wywołanie komend
+		//$sshService->cmd($config);
+		
     	echo $config;
     }
 
@@ -161,6 +167,17 @@ class ConfigController extends Controller
             ->with('nodes', $nodes);
 		
 	}
+	
+	//<DONE>napisałem service który wywkonuje te komendy
+    /*public function sshExec($id) {
+        $node = Node::getById($id);
+        $connection =  ssh2_connect(Config::get('ssh.host'), Config::get('ssh.port'));
+        if (!$connection) die('Connection failed');
+        ssh2_auth_password($connection, Config::get('ssh.username') , Config::get('ssh.password'));
+        $stream = ssh2_exec($connection, '/usr/local/bin/php -i');
+
+        return Redirect::back();
+    }*/
 	
 	/**
 	Tutaj proponuje zrobic obliczanie maski na podstawie tablicy koloru
