@@ -137,7 +137,8 @@ class ConfigController extends Controller
 			$config = $this->createConfig($node->id);
 			$sshService = new SshService( $connIP, $node->login, $node->password, 22, '/tmp/log.txt' );
 			$sshService->cmd($config);
-			$sshService->disconnect();	
+			$sshService->disconnect();
+			sleep(1);
 		}
 		
 		return redirect('/index');
