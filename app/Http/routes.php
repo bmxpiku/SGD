@@ -26,7 +26,10 @@ Route::post('/path/{id?}', ['as' => 'path', 'uses' => 'WelcomeController@path'])
 
 Route::get('/ssh/exec', 'WelcomeController@sshExec');
 
-Route::get('generate/{id?}', 'ConfigController@generateConfig');
+Route::get('/generate/{id?}', 'ConfigController@generateConfig');
+Route::get('/generateAll', 'ConfigController@generateConfigAll');
+Route::get('/show/{id?}', 'ConfigController@showConfig');
+Route::get('/showAll/{id?}', 'ConfigController@showConfigAll');
 
 Route::get('/vpls', 'ConfigController@vplsView');
 Route::post('/vpls', ['as' => 'vpls', 'uses' => 'ConfigController@vplsView']);

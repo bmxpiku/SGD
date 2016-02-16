@@ -14,15 +14,8 @@ use App\Services\SshService;
 class ConfigController extends Controller
 {
 
-	/* kolory to maski 32bit, zapisano w formacie HEX
-		zolty - 0001
-		zielony - 0002
-		szary - 0004
-		czerwony - 0008
-
-	*/
-    public function generateConfig($id){
-    	$node = Node::find($id);
+	public function createConfig($id) {
+		$node = Node::find($id);
     	$loIP = $node['name'];
     	$connIP = $node['ip'];
 
@@ -90,18 +83,65 @@ class ConfigController extends Controller
     	$config .= 'mpls ldp set enabled=yes lsr-id='.$node['name'].' transport-address='.$node['name'].'; ';
     	// Traffic Eng
     	$config .= 'mpls traffic-eng tunnel-path add use-cspf=yes name=dyn; ';
-
-		//<TODO> 1. nie wiem czy node->ip to nasz host i czy port powinien być 80, więc zmień testując jak cos
-	$sshService = new SshService( $connIP, $node['login'], $node['password'], 22, '/tmp/log.txt' );
-		//<TODO> wykonywanie komend -> nie jestem pewien czy mozna wysyłac cały rząd koemnd podzielony srednikiem
-		// wiec jak cos można to rozbic na tablice komend jesli nie przejdzie  
-		//$configArray = implode(';', $config); // a samo wywołanie komend
-	$sshService->cmd($config);
 		
-		//rozłączenie - zeby nie byłło wielu wiszących połączeń po wykonaniu instrukcji
+		return $config;
+		
+	}
+
+	/* kolory to maski 32bit, zapisano w formacie HEX
+		zolty - 0001
+		zielony - 0002
+		szary - 0004
+		czerwony - 0008
+
+	*/
+    public function generateConfig($id){
+	$node = Node::find($id);
+	$loIP = $node['name'];
+	$connIP = $node['ip'];
+	$config = $this->createConfig($id);
+	$sshService = new SshService( $connIP, $node['login'], $node['password'], 22, '/tmp/log.txt' );
+	$sshService->cmd($config);	
+	//rozłączenie - zeby nie byłło wielu wiszących połączeń po wykonaniu instrukcji
 	$sshService->disconnect();	
-    	echo $config;
+    	return redirect('/index');
     }
+	
+	public function showConfig($id) {
+		$config = $this->createConfig($id);
+		$confArray = explode(';',$config);
+		return view('scripts.simulator.show')
+            ->with('config', $confArray)
+			->with('nodeID', $id);
+	}
+	
+	public function showConfigAll(){
+		$nodes = Node::get();
+		$list = [];
+		foreach ($nodes as $key=> $node) {
+			$list[$key]['ip'] = $node->ip;
+			$list[$key]['id'] = $node->id;
+			$config = $this->createConfig($id);
+			$list[$key]['config'] = explode(';',$config);
+		}
+		
+		return view('scripts.simulator.showAll')
+            ->with('list', $list);
+	}
+	
+	public function generateConfigAll(){
+		$nodes = Node::get();
+		foreach ($nodes as $node) {
+			$loIP = $node->name;
+			$connIP = $node->ip;
+			$config = $this->createConfig($node->id);
+			$sshService = new SshService( $connIP, $node->login, $node->password, 22, '/tmp/log.txt' );
+			$sshService->cmd($config);
+			$sshService->disconnect();	
+		}
+		
+		return redirect('/index');
+	}
 
     public function modifyConfig($id){
     	$node = Node::find($id);

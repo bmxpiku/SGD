@@ -10,8 +10,14 @@ Lista wszystkich ruterów w sieci:
     <th>
         Akcje
         <a href="/add">
-            <button class="btn btn-sm btn-primary">{{'dodaj'}}</button>
+            <button class="btn btn-sm btn-primary">dodaj</button>
         </a>
+		<a href="/showAll">
+			<button class="btn btn-sm btn-danger">Wygeneruj konfigurację All</button>
+		</a>
+		<a href="/generateAll">
+			<button class="btn btn-sm btn-success">Wyslij All</button>
+		</a>
     </th>
     </thead>
     <tbody>
@@ -37,9 +43,12 @@ Lista wszystkich ruterów w sieci:
                     <button class="btn btn-sm btn-warning">{{'Ustal Łącza'}}</button>
                 </a>
 
-                <a href="/generate/{{$node['node']->id}}">
+                <a href="/show/{{$node['node']->id}}">
                     <button class="btn btn-sm btn-danger">{{'Wygeneruj konfigurację'}}</button>
                 </a>
+				<a href="/generate/{{$node['node']->id}}">
+					<button class="btn btn-sm btn-success">{{'Wyslij'}}</button>
+				</a>
             </td>
         </tr>
     @endforeach
