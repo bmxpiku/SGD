@@ -52,18 +52,14 @@
 		szary - 0004
 		czerwony - 0008 -->
 			<div class="form-inline">
-				<h4>definiowanie przepływności VPLSa</h4>
+				<h4>Wybór kolorów: </h4>
 				<div class="form-group form-group-sm">
 					<label for="color">Kolor</label>
 					{!! Form::select('color[]',array(
-					 '0111111111111110' => 'zolty NIE',
-					 '1111111111110001' => 'zolty TAK',
-					 '0111111111111101' => 'zielony NIE', 
-					 '1111111111110010' => 'zielony TAK',
-					 '0111111111111011' => 'szary NIE', 
-					 '1111111111110100' => 'szary TAK',
-					 '0111111111110111' => 'czerwony NIE', 
-					 '1111111111111000' => 'czerwony TAK'
+					 '1' => 'zolty', 
+					 '2' => 'zielony', 
+					 '4' => 'szary', 
+					 '8' => 'czerwony'
 					), null, array('multiple', 'class' => 'form-control mySelect', 'style'=>'width:200px;height:150px')) !!}
 				</div>
 			</div>

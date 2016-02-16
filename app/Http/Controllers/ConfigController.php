@@ -44,16 +44,16 @@ class ConfigController extends Controller
     		// Traffic Eng
     		$config .= 'mpls traffic-eng interface add interface='.$interface[$key].' bandwidth='.$bitrate[$key].'M ';
     		if($colour[$key] == 'yellow'){
-    			$config .= 'resource-class=0001; ';
+    			$config .= 'resource-class=1; ';
     		}
     		elseif($colour[$key] == 'green'){
-    			$config .= 'resource-class=0002; ';
+    			$config .= 'resource-class=2; ';
     		}
     		elseif($colour[$key] == 'grey'){
-    			$config .= 'resource-class=0004; '; 
+    			$config .= 'resource-class=4; '; 
     		}
     		elseif($colour[$key] == 'red'){
-    			$config .= 'resource-class=0008; ';
+    			$config .= 'resource-class=8; ';
     		}
     	}
 
@@ -92,15 +92,14 @@ class ConfigController extends Controller
     	$config .= 'mpls traffic-eng tunnel-path add use-cspf=yes name=dyn; ';
 
 		//<TODO> 1. nie wiem czy node->ip to nasz host i czy port powinien być 80, więc zmień testując jak cos
-		//$sshService = new SshService( $node->ip, $node->login, $node->password, 80, '/tmp/log.txt' );
+	$sshService = new SshService( $connIP, $node['login'], $node['password'], 22, '/tmp/log.txt' );
 		//<TODO> wykonywanie komend -> nie jestem pewien czy mozna wysyłac cały rząd koemnd podzielony srednikiem
 		// wiec jak cos można to rozbic na tablice komend jesli nie przejdzie  
 		//$configArray = implode(';', $config); // a samo wywołanie komend
-		//$sshService->cmd($config);
+	$sshService->cmd($config);
 		
 		//rozłączenie - zeby nie byłło wielu wiszących połączeń po wykonaniu instrukcji
-		//$sshService->disconnect();
-		
+	$sshService->disconnect();	
     	echo $config;
     }
 
@@ -136,7 +135,7 @@ class ConfigController extends Controller
             if(isset($data['color']))
 			    $affinity = $this->makeMask($data['color']);
 		    else
-                $affinity = 65535;
+                $affinity = 15;
 
             $router1 = Node::getbyID($data['ruter1']);
             $router2 = Node::getbyID($data['ruter2']);
@@ -144,7 +143,7 @@ class ConfigController extends Controller
             $interface2 = $data['interface2'];
 
             //Traffic eng interface
-            $config1 = 'interface traffic-eng add name='.$data['ruter1'].'to'.$data['ruter2'].' primary-path=dyn record-route=yes bandwidth='.$data['bitrate'].'M affinity-include-all='.$affinity.' from-address='.$router1['name'].' to-address='.$router2['name'].' disabled=no; ';
+            $config1 = 'interface traffic-eng add name='.$data['ruter1'].'to'.$data['ruter2'].' primary-path=dyn record-route=yes bandwidth='.$data['bitrate'].'M bandwidth-limit=100 affinity-include-any='.$affinity.' from-address='.$router1['name'].' to-address='.$router2['name'].' disabled=no; ';
             //VPLS
             $config1 .= 'interface vpls add name=vpls-'.$data['ruter1'].'to'.$data['ruter2'].' remote-peer='.$router2['name'].' vpls-id='.$data['ruter1'].':'.$data['ruter2'].' disabled=no; ';
             //Bridge VPLS and local interface
@@ -153,7 +152,7 @@ class ConfigController extends Controller
             $config1 .= 'interface bridge port add bridge=vpls-bridge-'.$interface1.' interface='.$interface1.'; ';
 
 
-            $config2 = 'interface traffic-eng add name='.$data['ruter2'].'to'.$data['ruter1'].' primary-path=dyn record-route=yes bandwidth='.$data['bitrate'].'M affinity-include-all='.$affinity.' from-address='.$router2['name'].' to-address='.$router1['name'].' disabled=no; ';
+            $config2 = 'interface traffic-eng add name='.$data['ruter2'].'to'.$data['ruter1'].' primary-path=dyn record-route=yes bandwidth='.$data['bitrate'].'M bandwidth-limit=100 affinity-include-any='.$affinity.' from-address='.$router2['name'].' to-address='.$router1['name'].' disabled=no; ';
             //VPLS
             $config2 .= 'interface vpls add name=vpls-'.$data['ruter2'].'to'.$data['ruter1'].' remote-peer='.$router1['name'].' vpls-id='.$data['ruter1'].':'.$data['ruter2'].' disabled=no; ';
             
@@ -161,6 +160,15 @@ class ConfigController extends Controller
             $config2 .= 'interface bridge add name=vpls-bridge-'.$interface2.'; ';
             $config2 .= 'interface bridge port add bridge=vpls-bridge-'.$interface2.' interface=vpls-'.$data['ruter2'].'to'.$data['ruter1'].'; ';
             $config2 .= 'interface bridge port add bridge=vpls-bridge-'.$interface2.' interface='.$interface2.'; ';
+
+            $sshService1 = new SshService( $router1['ip'], $router1['login'], $router1['password'], 22, '/tmp/log.txt' );
+            $sshService1->cmd($config1);
+            $sshService1->disconnect();
+	
+	    $sshService2 = new SshService( $router2['ip'], $router2['login'], $router2['password'], 22, '/tmp/log.txt' );
+            $sshService2->cmd($config2);
+            $sshService2->disconnect();
+
 
             return view('scripts.simulator.vplsConfig')->with(compact('config1', 'config2'));           
         }
@@ -187,17 +195,10 @@ class ConfigController extends Controller
 	Tak właśnie uczyniłem / bart
     **/
 	private function makeMask($color) {
-		$mask = hexdec('FFFF');
-        $binmask = decbin($mask);
-        $col1 = $color[0];
+		$mask = 0;
 		foreach($color as $col){
-            if($col[0] == '1')
-                $col1 = $col1 | $col;
-            else
-                $col1 = $col1 & $col;
+            		$mask += $col;
         }
-        $binmask = $binmask & $col1;
-        $mask = bindec($binmask);
 		return $mask;
 	}
 }

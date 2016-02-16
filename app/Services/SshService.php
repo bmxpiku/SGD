@@ -44,6 +44,14 @@ class SshService {
         return $this->$name;
     }
 
+    public function logAction($string) {
+	$file = $this->sLog;
+	$current = file_get_contents($file);
+	$current .= "$string\n";
+	file_put_contents($file, $current);
+
+    }
+
     public function connect () {
         $this->logAction ( "Connecting to {$this->host}" );
         if ( $this->conn = ssh2_connect ( $this->host, $this->port ) ) {
